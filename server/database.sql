@@ -17,6 +17,27 @@ CREATE TABLE hotel(
     FOREIGN KEY (city_id) references city(city_id)
 );
 
+CREATE TABLE host_credentials(
+    host_username varchar(30) PRIMARY KEY,
+    host_password varchar (20) NOT NULL,
+    hotel_id INT NOT NULL,
+    FOREIGN KEY (hotel_id) references hotel(hotel_id)
+);
+
+CREATE TABLE booking(
+    booking_id int NOT NULL PRIMARY KEY,
+    first_name varchar(20) NOT NULL,
+    last_name varchar(20),
+    email varchar(40),
+    hotel_id int NOT NULL,
+    booking_date date,
+    check_in_date date,
+    check_out_data date,
+    total_amount int NOT NULL,
+    phone_number varchar(14) NOT NULL,
+    FOREIGN KEY (hotel_id) references hotel(hotel_id)
+);
+
 INSERT INTO city VALUES 
 (1, "Bengaluru", "Karnataka"),
 (2, "Mangaluru", "Karnataka"),
@@ -38,3 +59,20 @@ INSERT INTO hotel VALUES
 (2, "ITC Maratha", "Sahar Village, Andheri East, Mumbai, Maharashtra 400099", 5, 50, 4),
 (3, "Aquaman Resort", "Opposite to Pattanagere shed, Bengaluru", 5, 20, 1),
 (4, "Ocean Pearl", "Navabharath Cir, Kodailbail, Mangaluru, Karnataka 575003", 4, 40, 2);
+
+INSERT INTO host_credentials VALUES
+("RohitSharma45", "whatapav123", 1),
+("DarshanThoogudeepa6106", "Jalagara", 3),
+("SanjivP00ri", "NoAttacking", 2);
+
+INSERT INTO booking VALUES
+(1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210"),
+(2, 'Jane', 'Smith', 'janesmith500dos@gmail.com',1, '2023-12-15', '2023-12-20', '2023-12-25', 3500, "+911234567890");
+
+
+
+
+
+
+
+
