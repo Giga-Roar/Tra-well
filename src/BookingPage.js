@@ -6,17 +6,27 @@ import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import GroupIcon from '@mui/icons-material/Group';
 import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import { BACKEND_URL } from './config';
+
 
 const BookingPage = () => {
 
     const [cities, setCities] = useState([]);
     const [hotels, setHotels] = useState([]);
     const [rooms, setRooms] = useState([]);
+    // eslint-disable-next-line
     const [selectedCity, setSelectedCity] = useState('');
+    // eslint-disable-next-line
     const [selectedHotel, setSelectedHotel] = useState('');
+    // eslint-disable-next-line
+    const [allInputsFilled, setallInputsFilled] = useState(true);
+    // eslint-disable-next-line
+    const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentDone, setPaymentDone] = useState(false);
     const [bookingConfirmed, setBookingConfirmed] = useState(false);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
+    const [bookingData, setBookingData] = useState({});
+    
 
     // Mock data to be replaced by database/API data
     useEffect(() => {
@@ -24,6 +34,32 @@ const BookingPage = () => {
         setCities(['City 1', 'City 2', 'City 3']);
     }, []);
 
+
+    const sendBookingData = async (bookingDataObject) => {
+        console.log("Booked");
+        try {
+            console.log(process.env.MYSQL_DATABASE);
+          const url = `${BACKEND_URL}/booking-data`;
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Set content type for JSON data
+            },
+            body: JSON.stringify(bookingDataObject) // Convert data to JSON string
+          };
+      
+          const response = await fetch(url, options);
+      
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
     const handleCityChange = (e) => {
         setSelectedCity(e.target.value);
         // Fetch hotels based on selected city (mocked here)
@@ -41,16 +77,32 @@ const BookingPage = () => {
 
     const handlePayment = () => {
         // Add your actual input validation logic here
-        const allInputsFilled = true; // Replace with actual validation logic
-
-        if (allInputsFilled) {
+         // Replace with actual validation logic
+        if (bookingConfirmed) {
             setPaymentDone(true);
+            const firstName = document.getElementById('f_name').value;
+            const lastName = document.getElementById('l_name').value;
+            const phoneNumber = document.getElementById('phone').value
+            const email = document.getElementById('email').value;
+            const checkInDate = document.getElementById('checkin').value;
+            const checkOutDate = document.getElementById('checkout').value;
+
+            setBookingData({
+                firstName : firstName,
+                lastName : lastName,
+                phoneNumber: phoneNumber,
+                email : email,
+                checkInDate : checkInDate,
+                checkOutDate : checkOutDate
+            })
+            sendBookingData(bookingData);
         }
     };
 
     const confirmBooking = () => {
-        if (paymentDone) {
+        if (allInputsFilled) {
             setBookingConfirmed(true);
+            handlePayment();
         }
     };
 
@@ -58,20 +110,21 @@ const BookingPage = () => {
         setNumberOfPeople(e.target.value);
     };
 
-    const generateReceiptPDF = () => {
-        const doc = new jsPDF();
-        doc.setFontSize(20);
-        doc.text('Booking Receipt', 20, 20);
-        doc.setFontSize(12);
-        doc.text('Booking ID: #12345', 20, 30);
-        doc.text(`Name: ${document.getElementById('f_name').value} ${document.getElementById('l_name').value}`, 20, 40);
-        doc.text(`Phone: ${document.getElementById('phone').value}`, 20, 50);
-        doc.text(`Email: ${document.getElementById('email').value}`, 20, 60);
-        doc.text(`Check-in: ${document.getElementById('checkin').value}`, 20, 70);
-        doc.text(`Check-out: ${document.getElementById('checkout').value}`, 20, 80);
-        // Add more details as necessary
+    const generateReceiptPDF = () => { 
+        if(paymentDone) {
+            const doc = new jsPDF();
+            doc.setFontSize(20);
+            doc.text('Booking Receipt', 20, 20);
+            doc.setFontSize(12);
+            doc.text('Booking ID: #12345', 20, 30);
+            doc.text(`Name: ${bookingData.firstName} ${bookingData.lastName}`, 20, 40);
+            doc.text(`Phone: ${bookingData.phoneNumber}`, 20, 50);
+            doc.text(`Email: ${bookingData.email}`, 20, 60);
+            doc.text(`Check-in: ${bookingData.checkInDate}`, 20, 70);
+            doc.text(`Check-out: ${bookingData.checkOutDate}`, 20, 80);
 
-        doc.save('receipt.pdf'); // Save the generated PDF with the name 'receipt.pdf'
+            doc.save('receipt.pdf'); // Save the generated PDF with the name 'receipt.pdf'
+        }
     };
 
     return (
@@ -190,7 +243,10 @@ const BookingPage = () => {
 
                     {/* Mode of Payment */}
                     <label className='form_label' htmlFor='payment'>Mode of Payment:</label>
-                    <select className='form_select' id='payment' name='payment' onChange={handlePayment} required>
+                    <select className='form_select' id='payment' name='payment' onChange={()=>{
+                        setPaymentMethod(document.getElementById("payment").value);
+                        console.log("Payment Method : ", paymentMethod);
+                    }} required>
                         <option value=''>Select Payment Method</option>
                         <option value='card'>Credit Card</option>
                         <option value='paypal'>PayPal</option>
@@ -201,7 +257,7 @@ const BookingPage = () => {
                 </form>
 
                 {/* Confirm Booking Button */}
-                <Button className='confirm_button' onClick={confirmBooking} disabled={!paymentDone}>Confirm Booking</Button>
+                <Button className='confirm_button' onClick={confirmBooking} disabled={!allInputsFilled}>Confirm Booking</Button>
 
                 {/* Booking Receipt */}
                 <Button className='download_button' onClick={generateReceiptPDF}>Download Receipt</Button>
