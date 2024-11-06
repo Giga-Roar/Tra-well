@@ -76,6 +76,7 @@ body {
     backdrop-filter: blur(10px);
     background-color: rgba(176, 193, 218, 0.5);
     color: #e1f3f5;
+    text-align: center;
 }
 
 .card_holder h2 {
