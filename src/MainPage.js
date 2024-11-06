@@ -5,6 +5,7 @@ import { Button, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import GroupIcon from '@mui/icons-material/Group';
+import LockIcon from '@mui/icons-material/Lock';
 
 const MainPage = () => {
     return (
@@ -45,6 +46,16 @@ const MainPage = () => {
                             sx={{ color: '#9c1de8', '&:hover': { backgroundColor: '#9c1de8', color: 'white', textShadow: '1px 1px 5px black', borderTopRightRadius: '12px', borderBottomLeftRadius: '20px' } }}
                         >
                             <i>Team</i>
+                        </Button>
+                    </Link>
+                    <Link to="/admin-login" style={{ textDecoration: 'none' }}>
+                        <Button
+                            className='admin_btn'
+                            startIcon={<LockIcon />}
+                            size='large'
+                            sx={{ color: '#d72324', '&:hover': { backgroundColor: '#d72324', color: 'white', textShadow: '1px 1px 5px black', borderRadius: '12px' } }}
+                        >
+                            <i>Admin Login</i>
                         </Button>
                     </Link>
                 </div>
