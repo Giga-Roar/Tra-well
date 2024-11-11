@@ -14,7 +14,7 @@ const MainPage = () => {
                 <a href='/' style={{ textDecoration: 'none' }}>
                     <div className='header_head' style={{ cursor: 'pointer' }}>
                         <img src='/assets/head_img.png' alt='header_img'></img>
-                        <h1><i>Tra-Well</i></h1>
+                        <h1><i>Book-My-Trip</i></h1>
                     </div>
                 </a>
                 <div className='header_links'>
@@ -62,16 +62,16 @@ const MainPage = () => {
             </div>
 
             <div className='card_holder'>
-                <h2><i>What is <span>Tra-Well</span> ?</i></h2>
+                <h2><i>What is <span>Book-My-Trip</span> ?</i></h2>
                 <b>
                     <p>
                         <span className='orange'>India is a country which is rich in cultural diversity, vibrant traditions and awe-inspiring landscapes.
                             From the bustling city of Mumbai to the serene backwaters of Kerala, every city has its own story to tell.
                             Navigating through this vast and diverse country can be quite a challenge.</span><br />
-                        <span className='white'>This is where <span className='tra_span'>Tra-Well</span> comes in.</span>
+                        <span className='white'>This is where <span className='tra_span'>Book-My-Trip</span> comes in.</span>
                     </p>
                     <p>
-                        <span className='green'>Tra-Well is your one-stop solution for seamless travel planning and booking. Whether you're looking to organize a personal trip or a group tour, Tra-Well offers an easy-to-use interface and a host of features designed to make your journey hassle-free.</span>
+                        <span className='green'>Book-My-Trip is your one-stop solution for seamless travel planning and booking. Whether you're looking to organize a personal trip or a group tour, Book-My-Trip offers an easy-to-use interface and a host of features designed to make your journey hassle-free.</span>
                     </p>
                     <br />
                     <Typography variant='subtitle1' align='left' sx={{ marginLeft: '30px', color: '#d72324', fontWeight: 'bold', fontSize: '20px' }}>Our features:</Typography>
@@ -85,14 +85,14 @@ const MainPage = () => {
                     </ol>
                     <br />
                     <p style={{ textShadow: '1px 1px 5px black' }}>
-                        With Tra-Well, travel planning has never been easier. Start your adventure today and explore India, worry-free!
+                        With Book-My-Trip, travel planning has never been easier. Start your adventure today and explore India, worry-free!
                     </p>
                 </b>
             </div>
 
             <div className='footer'>
                 <p>This website was made for the sole purpose of a SE-DBMS project.</p>
-                <p>&copy; 2024 Tra-Well. All rights reserved.</p>
+                <p>&copy; 2024 Book-My-Trip. All rights reserved.</p>
             </div>
         </div >
     );
