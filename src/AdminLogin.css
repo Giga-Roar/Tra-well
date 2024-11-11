@@ -1,9 +1,60 @@
-.admin-login {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
+/* Center the container in the viewport */
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 250px 250px 250px 250px;
+    padding: 25px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    border: none;
+    border-radius: 25px;
+}
+
+/* Admin Login Container */
+.admin-login-container {
+    /* max-width: 300px; */
+    width: 50%;
+    padding: 30px 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
     text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.admin-login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Typography for header */
+.admin-login-title {
+    color: #2cb977;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+.admin-login-button {
     border-radius: 8px;
-    background-color: white;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+    background-color: #d72324;
+    color: white;
+}
+
+.admin-login-button:hover {
+    background-color: #b81d20;
+}
+
+/* Input Fields */
+.admin-login-input {
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 16px;
 }
