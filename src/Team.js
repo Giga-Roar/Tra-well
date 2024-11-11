@@ -16,7 +16,7 @@ const Team = () => {
                 <a href='/' style={{ textDecoration: 'none' }}>
                     <div className='header_head' style={{ cursor: 'pointer' }}>
                         <img src='/assets/head_img.png' alt='header_img'></img>
-                        <h1><i>Tra-Well</i></h1>
+                        <h1><i>Book-My-Trip</i></h1>
                     </div>
                 </a>
                 <div className='header_links'>
