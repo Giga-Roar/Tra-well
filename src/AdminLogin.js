@@ -1,3 +1,4 @@
+// AdminLogin.js
 import React, { useState } from 'react';
 import './AdminLogin.css';
 import { TextField, Button, Typography } from '@mui/material';
@@ -8,46 +9,59 @@ const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        // Hardcoded credentials
-        const hardcodedUsername = 'admin';
-        const hardcodedPassword = 'password123';
+    // Define admins with their hotel names
+    const admins = [
+        { username: 'admin1', password: 'password123', hotelName: 'Hotel Sunshine' },
+        { username: 'admin2', password: 'password456', hotelName: 'Grand Palace' },
+        { username: 'admin3', password: 'password789', hotelName: 'Ocean View Resort' }
+    ];
 
-        if (username === hardcodedUsername && password === hardcodedPassword) {
-            navigate('/admin-dashboard');
+    const handleLogin = () => {
+        // Find admin with matching credentials
+        const admin = admins.find(
+            (a) => a.username === username && a.password === password
+        );
+
+        if (admin) {
+            navigate('/admin-dashboard', { state: { hotelName: admin.hotelName } });
         } else {
             alert('Invalid username or password');
         }
     };
 
     return (
-        <div className="admin-login">
-            <Typography variant="h4" sx={{ color: '#d72324', marginBottom: '20px' }}>Admin Login</Typography>
-            <TextField
-                label="Username"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-                variant="contained"
-                sx={{ backgroundColor: '#d72324', '&:hover': { backgroundColor: '#b81d20' } }}
-                fullWidth
-                onClick={handleLogin}
-            >
-                Login
-            </Button>
+        <div className='main'>
+            <div className="admin-login">
+                <Typography variant="h4" sx={{ color: '#d72324', marginBottom: '20px' }} className='admin-login-title'>Admin Login</Typography>
+                <TextField
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={username}
+                    className='admin-login-title'
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={password}
+                    className='admin-login-title'
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: '#d72324', '&:hover': { backgroundColor: '#b81d20' } }}
+                    fullWidth
+                    className='admin-login-button'
+                    onClick={handleLogin}
+                >
+                    Login
+                </Button>
+            </div>
         </div>
     );
 };
