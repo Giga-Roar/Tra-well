@@ -1,0 +1,199 @@
+.header {
+    width: 100%;
+}
+
+.booking-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Main booking form section */
+.booking-form {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* Form label styling */
+.booking-form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    display: block;
+    font-size: 14px;
+}
+
+/* Form input fields */
+.booking-form input[type="text"],
+.booking-form input[type="email"],
+.booking-form input[type="number"],
+.booking-form input[type="date"],
+.booking-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Input validation errors */
+.booking-form span {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    display: block;
+}
+
+/* Select dropdown styling */
+.booking-form select {
+    font-size: 14px;
+}
+
+/* Checkbox for room selection */
+.booking-form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Booking Confirmation Section */
+.booking_confirmation {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.booking_confirmation h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2cb977;
+}
+
+.booking_confirmation p {
+    font-size: 16px;
+    color: #555;
+}
+
+
+/* Home, Booking, and Team Buttons */
+.home_btn,
+.book_btn,
+.team_btn {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.home_btn {
+    background-color: #2cb977;
+    color: white;
+}
+
+.home_btn:hover {
+    background-color: #248f5f;
+}
+
+.book_btn {
+    background-color: #1e2978;
+    color: white;
+}
+
+.book_btn:hover {
+    background-color: #162252;
+}
+
+.team_btn {
+    background-color: #9c1de8;
+    color: white;
+}
+
+.team_btn:hover {
+    background-color: #771bcb;
+}
+
+/* Pay Now and Confirm Booking buttons */
+.booking-form .MuiButton-contained {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.booking-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Receipt Download Button */
+.booking_confirmation button {
+    background-color: #2cb977;
+    color: white;
+    margin-top: 20px;
+}
+
+.booking_confirmation button:hover {
+    background-color: #248f5f;
+}
+
+/* Form Input Field Spacing */
+.booking-form div {
+    margin-bottom: 16px;
+}
+
+/* Card-like layout for the form */
+.booking-form input[type="text"],
+.booking-form input[type="email"],
+.booking-form input[type="date"],
+.booking-form select {
+    transition: border 0.3s ease;
+}
+
+.booking-form input[type="text"]:focus,
+.booking-form input[type="email"]:focus,
+.booking-form input[type="date"]:focus,
+.booking-form select:focus {
+    border-color: #1e2978;
+    outline: none;
+}
+
+/* Custom Checkbox Styles */
+.booking-form input[type="checkbox"] {
+    transform: scale(1.3);
+    margin-right: 10px;
+}
+
+/* Modern form inputs */
+.booking-form input,
+.booking-form select {
+    background-color: #fafafa;
+}
+
+/* Adjust the mobile responsiveness */
+@media (max-width: 768px) {
+    .booking-page {
+        padding: 15px;
+    }
+
+    .booking-form {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .booking-form label {
+        font-size: 12px;
+    }
+
+    .booking-form input[type="text"],
+    .booking-form input[type="email"],
+    .booking-form input[type="date"],
+    .booking-form select {
+        font-size: 12px;
+    }
+
+    .booking_confirmation {
+        margin-top: 30px;
+    }
+}
