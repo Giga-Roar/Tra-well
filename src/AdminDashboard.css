@@ -1,9 +1,108 @@
-.admin-dashboard {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: white;
+/* Main Dashboard Container Centering and Styling */
+.dashmain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 25px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Admin Dashboard Content Styling */
+.admin-dashboard-container {
+    margin-top: 158px;
+    margin-bottom: 158px;
+    margin-left: 360px;
+    width: 50%;
+    padding: 30px 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hover Effect */
+.admin-dashboard-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Typography for Header */
+.admin-dashboard-title {
+    color: #2cb977;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Room Selection Styling */
+.room-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.room-label {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.room-checkbox {
+    color: #2cb977;
+}
+
+.room-checkbox.Mui-checked {
+    color: #d72324;
+}
+
+/* Button Styling */
+.admin-dashboard-button {
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+    background-color: #d72324;
+    color: white;
+    width: 100%;
+}
+
+.admin-dashboard-button:hover {
+    background-color: #b81d20;
+}
+
+/* Logout Button Styling */
+.admin-dashboard-logout {
+    color: #d72324;
+    border: 1px solid #d72324;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.admin-dashboard-logout:hover {
+    background-color: #fbecec;
+}
+
+/* Input Field Styling */
+.admin-dashboard-input {
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
 }
