@@ -1,5 +1,5 @@
 import express from 'express'
-import {getHotels, devQuery, book, getAllBookings} from './database.mjs';
+import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities} from './database.mjs';
 import readline  from 'readline';
 import cors from "cors";
 
@@ -49,10 +49,28 @@ app.get("/hotels/:city/:min_rating?/:max_rating?", async (req, res) => {
     }
 })
 
+
+app.get("/cities", async (req, res) => {
+    const cities = await getCities();
+    res.send(cities);
+})
+
+
+app.get("/hotelsInCity/:cityId", async (req, res) => {
+    const selected_city_id = parseInt(req.params.cityId);
+    const hotels = await getHotels(null, 0, 5, selected_city_id);
+    // console.log(hotels);
+    res.send(hotels);
+})
+
+
+
+
 app.get("/hotels/:city", async (req, res) =>{
     const hotels = await getHotels(city, 0, 5);
     res.send(hotels);
 })
+
 
 app.get("/hotels", async (req, res) =>{
     const hotels = await getHotels(false, 0, 5);
