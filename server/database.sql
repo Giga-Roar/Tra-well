@@ -69,6 +69,14 @@ INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210"),
 (2, 'Jane', 'Smith', 'janesmith500dos@gmail.com',1, '2023-12-15', '2023-12-20', '2023-12-25', 3500, "+911234567890");
 
+DELIMITER $$
+CREATE PROCEDURE get_hotels_id_name(IN selected_city_id INT)
+BEGIN
+    SELECT hotel_id, hotel_name, rating FROM hotel NATURAL JOIN city WHERE city_id = selected_city_id;
+END;
+$$
+DELIMITER ;
+
 
 
 
