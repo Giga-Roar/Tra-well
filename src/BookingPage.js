@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import './BookingPage.css';
 import { Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
@@ -6,8 +6,12 @@ import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import GroupIcon from '@mui/icons-material/Group';
 import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import { BACKEND_URL } from './config';
 
 const BookingPage = () => {
+    const [isRendered, setRendered] = useState(false);
+    const [bookingData, setBookingData] = useState({});
+
     const [cities, setCities] = useState([]);
     const [hotels, setHotels] = useState([]);
     const [rooms, setRooms] = useState([]);
@@ -32,20 +36,72 @@ const BookingPage = () => {
     });
     const [usedBookingIds, setUsedBookingIds] = useState(new Set());
 
+    // useEffect(() => {
+    //     setCities(['City 1', 'City 2', 'City 3']);
+    // }, []);
     useEffect(() => {
-        setCities(['City 1', 'City 2', 'City 3']);
-    }, []);
+        if (selectedHotel) {
+            console.log(selectedHotel); // Log after state updates
+            setRooms(['Room 1', 'Room 2', 'Room 3']); // Update rooms here
+        }
+    }, [selectedHotel]);
 
-    const handleCityChange = (e) => {
-        setSelectedCity(e.target.value);
-        setHotels([
-            { name: 'Hotel A', rating: '4.5' },
-            { name: 'Hotel B', rating: '4.0' },
-        ]);
+    const fetchCities = async () => {
+        // Fetch cities from the database (mocked here)
+        setCities(['City 1', 'City 2', 'City 3']);
+        
+        try {
+            const citiesIdName = await fetch(`${BACKEND_URL}/cities`);
+            const data = await citiesIdName.json();
+            setCities(data);
+            // console.log(data);
+        } catch (error) {
+            console.error("Error fetching cities:", error);
+        }
+    };
+    if(!isRendered){
+        fetchCities();
+        setRendered(true);
+    }
+
+
+    const sendBookingData = async (bookingDataObject) => {
+        console.log("Booked");
+        try {
+            console.log(process.env.MYSQL_DATABASE);
+          const url = `${BACKEND_URL}/booking-data`;
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Set content type for JSON data
+            },
+            body: JSON.stringify(bookingDataObject) // Convert data to JSON string
+          };
+      
+          const response = await fetch(url, options);
+      
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+
+
+    const handleCityChange = async (e) => {
+        setSelectedCity(document.getElementById("city").value);
+        const response = await fetch(`${BACKEND_URL}/hotelsInCity/${e.target.value}`);
+        setHotels(await response.json());
     };
 
-    const handleHotelChange = (e) => {
-        setSelectedHotel(e.target.value);
+    const handleHotelChange = async (e) => {
+        const currHotel = e.target.value;
+        setSelectedHotel(await JSON.parse(currHotel));
+        // console.log(currHotel);
         setRooms(['Room 1', 'Room 2', 'Room 3']);
     };
 
@@ -62,9 +118,27 @@ const BookingPage = () => {
     };
 
     const confirmBooking = () => {
-        if (paymentDone) {
+        if (bookingConfirmed) {
             setBookingId(generateBookingId());
+            setPaymentDone(true);
+            const firstName = document.getElementById('f_name').value;
+            const lastName = document.getElementById('l_name').value;
+            const phoneNumber = document.getElementById('phone').value
+            const email = document.getElementById('email').value;
+            const checkInDate = document.getElementById('checkin').value;
+            const checkOutDate = document.getElementById('checkout').value;
+
+            setBookingData({
+                firstName : firstName,
+                lastName : lastName,
+                phoneNumber: phoneNumber,
+                email : email,
+                checkInDate : checkInDate,
+                checkOutDate : checkOutDate,
+                hotel_id : selectedHotel.hotel_id,
+            })
             setBookingConfirmed(true);
+            sendBookingData(bookingData);
         }
     };
 
@@ -256,6 +330,7 @@ const BookingPage = () => {
                 <div>
                     <label>First Name</label>
                     <input
+                        id="f_name"
                         type="text"
                         name="firstName"
                         value={guestDetails.firstName}
@@ -267,6 +342,7 @@ const BookingPage = () => {
                 <div>
                     <label>Last Name</label>
                     <input
+                        id="l_name"
                         type="text"
                         name="lastName"
                         value={guestDetails.lastName}
@@ -278,6 +354,7 @@ const BookingPage = () => {
                 <div>
                     <label>Phone</label>
                     <input
+                        id="phone"
                         type="text"
                         name="phone"
                         value={guestDetails.phone}
@@ -289,6 +366,7 @@ const BookingPage = () => {
                 <div>
                     <label>Email</label>
                     <input
+                        id="email"
                         type="email"
                         name="email"
                         value={guestDetails.email}
@@ -300,6 +378,7 @@ const BookingPage = () => {
                 <div>
                     <label>Date of Birth</label>
                     <input
+                        id="dob"
                         type="date"
                         value={dob}
                         onChange={handleDobChange}
@@ -312,6 +391,7 @@ const BookingPage = () => {
                 <div>
                     <label>Number of People</label>
                     <input
+                        id="number_of_people"
                         type="number"
                         value={numberOfPeople}
                         onChange={handleNumberOfPeopleChange}
@@ -323,12 +403,10 @@ const BookingPage = () => {
                 {/* City Selection */}
                 <div>
                     <label>Select City</label>
-                    <select value={selectedCity} onChange={handleCityChange}>
-                        <option value="">Select City</option>
-                        {cities.map((city, index) => (
-                            <option key={index} value={city}>
-                                {city}
-                            </option>
+                    <select id="city" value={selectedCity} onChange={handleCityChange}>
+                        <option key={0} value="">Select City</option>
+                        {cities.map((city) => (
+                            <option key={city.city_id} value={city.city_id}>{city.city_name}</option>
                         ))}
                     </select>
                 </div>
@@ -336,11 +414,11 @@ const BookingPage = () => {
                 {/* Hotel Selection */}
                 <div>
                     <label>Select Hotel</label>
-                    <select value={selectedHotel} onChange={handleHotelChange}>
-                        <option value="">Select Hotel</option>
-                        {hotels.map((hotel, index) => (
-                            <option key={index} value={hotel.name}>
-                                {hotel.name} ({hotel.rating} stars)
+                    <select id="hotel" value={JSON.stringify(selectedHotel)} onChange={handleHotelChange}>
+                        <option key={0} value="">Select Hotel</option>
+                        {hotels.map((hotel) => (
+                            <option key={hotel.hotel_id} value={JSON.stringify(hotel)}>
+                                {hotel.hotel_name} (Rating: {hotel.rating})
                             </option>
                         ))}
                     </select>
@@ -365,12 +443,12 @@ const BookingPage = () => {
                 {/* Date Selection */}
                 <div>
                     <label>Check-in Date</label>
-                    <input type="date" value={checkInDate} onChange={handleCheckInChange} />
+                    <input id="checkin" type="date" value={checkInDate} onChange={handleCheckInChange} />
                 </div>
 
                 <div>
                     <label>Check-out Date</label>
-                    <input type="date" value={checkOutDate} onChange={handleCheckOutChange} />
+                    <input id="checkout" type="date" value={checkOutDate} onChange={handleCheckOutChange} />
                     {dateError && <span style={{ color: 'red' }}>{dateError}</span>}
                 </div>
 
