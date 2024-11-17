@@ -35,6 +35,7 @@ CREATE TABLE booking(
     check_out_data date,
     total_amount int NOT NULL,
     phone_number varchar(14) NOT NULL,
+    booker_age int NOT NULL,
     FOREIGN KEY (hotel_id) references hotel(hotel_id)
 );
 
@@ -66,8 +67,8 @@ INSERT INTO host_credentials VALUES
 ("SanjivP00ri", "NoAttacking", 2);
 
 INSERT INTO booking VALUES
-(1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210"),
-(2, 'Jane', 'Smith', 'janesmith500dos@gmail.com',1, '2023-12-15', '2023-12-20', '2023-12-25', 3500, "+911234567890");
+(1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
+(2, 'Jane', 'Smith', 'janesmith500dos@gmail.com',1, '2023-12-15', '2023-12-20', '2023-12-25', 3500, "+911234567890", 18);
 
 DELIMITER $$
 CREATE PROCEDURE get_hotels_id_name(IN selected_city_id INT)
@@ -78,9 +79,18 @@ $$
 DELIMITER ;
 
 
+DELIMITER $$
 
+CREATE TRIGGER check_age_before_insert
+BEFORE INSERT ON booking
+FOR EACH ROW
+BEGIN
+    IF NEW.booker_age < 18 THEN
+        SIGNAL SQLSTATE "45000"
+        SET MESSAGE_TEXT = "Age must be 18 or older to make a booking.";
+    END IF;
+END $$
 
-
-
+DELIMITER ;
 
 
