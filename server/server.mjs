@@ -21,7 +21,9 @@ app.post("/booking-data", async (req, res) => {
         res.send(data);
     }
     catch (e) {
-        console.error("booking error: ", e);
+        // console.error("booking error: ", e);
+        console.log("Age must be above 18");
+        res.send("Age must be above 18");
     }
 })
 
