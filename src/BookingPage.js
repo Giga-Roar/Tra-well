@@ -105,7 +105,14 @@ const BookingPage = () => {
           if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status}`);
           }
-      
+
+          const responseText = await response.text()
+          
+          if (responseText.trim() == "Age must be above 18"){
+            alert('Age of the customer must be 18 or above to book a room');
+            setBookingConfirmed(false);
+          }
+          
         //   const data = await response.json();
         //   console.log(`sent ${data}`);
         } catch (error) {
@@ -158,7 +165,18 @@ const BookingPage = () => {
             const checkInDate = document.getElementById('checkin').value;
             const checkOutDate = document.getElementById('checkout').value;
             const h_id = JSON.parse(document.getElementById("hotel").value).hotel_id
-            // console.log(h_id);
+            const booker_dob = document.getElementById('dob').value;
+
+            const today = new Date();
+            const date_object_of_dob = new Date(booker_dob);
+
+            // Calculate the difference in milliseconds
+            const differenceInMilliseconds = today - date_object_of_dob;
+
+            // Convert milliseconds to years
+            const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25; 
+            const booker_age = differenceInMilliseconds / millisecondsInYear;
+
 
             setBookingData({
                 firstName : firstName,
@@ -168,6 +186,7 @@ const BookingPage = () => {
                 checkInDate : checkInDate,
                 checkOutDate : checkOutDate,
                 hotel_id : h_id,
+                booker_age : booker_age
             })
             // console.log("ok here: " + JSON.stringify(bookingData));
         } // eslint-disable-next-line
