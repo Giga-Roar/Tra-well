@@ -10,7 +10,7 @@ import { BACKEND_URL } from './config';
 
 const BookingPage = () => {
     const [isRendered, setRendered] = useState(false);
-    const [bookingData, setBookingData] = useState({});
+    const [bookingData, setBookingData] = useState(null);
 
     const [cities, setCities] = useState([]);
     const [hotels, setHotels] = useState([]);
@@ -36,15 +36,36 @@ const BookingPage = () => {
     });
     const [usedBookingIds, setUsedBookingIds] = useState(new Set());
 
+
     // useEffect(() => {
-    //     setCities(['City 1', 'City 2', 'City 3']);
-    // }, []);
+    //     // Triggering the preflight OPTIONS request manually
+        const triggerPreflight = async () => {
+            try {
+                const response = await fetch(`${BACKEND_URL}/booking-data`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Add any other custom headers here if necessary
+                    },
+                });
+                if (response.ok) {
+                    console.log('Preflight successful');
+                } else {
+                    // console.error('Preflight failed');
+                }
+            } catch (error) {
+                // console.error('Error triggering preflight', error);
+            }
+        };
+
     useEffect(() => {
         if (selectedHotel) {
-            console.log(selectedHotel); // Log after state updates
+            // console.log(selectedHotel); // Log after state updates
             setRooms(['Room 1', 'Room 2', 'Room 3']); // Update rooms here
         }
     }, [selectedHotel]);
+
+    
 
     const fetchCities = async () => {
         // Fetch cities from the database (mocked here)
@@ -61,14 +82,15 @@ const BookingPage = () => {
     };
     if(!isRendered){
         fetchCities();
+        triggerPreflight();
         setRendered(true);
     }
 
 
     const sendBookingData = async (bookingDataObject) => {
-        console.log("Booked");
+        // console.log("Booked");
         try {
-            console.log(process.env.MYSQL_DATABASE);
+            // console.log("DB: " + process.env.MYSQL_DATABASE);
           const url = `${BACKEND_URL}/booking-data`;
           const options = {
             method: 'POST',
@@ -84,8 +106,8 @@ const BookingPage = () => {
             throw new Error(`Network response was not ok: ${response.status}`);
           }
       
-          const data = await response.json();
-          console.log(data);
+        //   const data = await response.json();
+        //   console.log(`sent ${data}`);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -113,20 +135,30 @@ const BookingPage = () => {
         }
     };
 
+    useEffect(()=>{
+        if(paymentDone){
+            // console.log("Payment Done");
+        }
+    }, [paymentDone]);
+
     const handlePayment = () => {
         setPaymentDone(true);
     };
 
-    const confirmBooking = () => {
+
+    useEffect(()=>{
         if (bookingConfirmed) {
+            // console.log("Booked Effect");
             setBookingId(generateBookingId());
-            setPaymentDone(true);
+            // setPaymentDone(true);
             const firstName = document.getElementById('f_name').value;
             const lastName = document.getElementById('l_name').value;
             const phoneNumber = document.getElementById('phone').value
             const email = document.getElementById('email').value;
             const checkInDate = document.getElementById('checkin').value;
             const checkOutDate = document.getElementById('checkout').value;
+            const h_id = JSON.parse(document.getElementById("hotel").value).hotel_id
+            // console.log(h_id);
 
             setBookingData({
                 firstName : firstName,
@@ -135,11 +167,29 @@ const BookingPage = () => {
                 email : email,
                 checkInDate : checkInDate,
                 checkOutDate : checkOutDate,
-                hotel_id : selectedHotel.hotel_id,
+                hotel_id : h_id,
             })
-            setBookingConfirmed(true);
+            // console.log("ok here: " + JSON.stringify(bookingData));
+        } // eslint-disable-next-line
+    }, [bookingConfirmed]);
+
+    // eslint-disable-next-line
+    useEffect(()=>{
+        if(bookingId){
+
+        }
+            // console.log("bk_id:" + bookingId);
+    }, [bookingId]);
+
+    useEffect(()=>{
+        if(bookingData){
+            // console.log("bk_data:" + bookingData);
             sendBookingData(bookingData);
         }
+                
+    }, [bookingData])
+    const confirmBooking = () => {
+        setBookingConfirmed(true);
     };
 
     const handleNumberOfPeopleChange = (e) => {
@@ -202,7 +252,7 @@ const BookingPage = () => {
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text(`Hotel: ${selectedHotel}`, 20, 110);
+        doc.text(`Hotel: ${selectedHotel.hotel_name}`, 20, 110);
         doc.text(`Room(s): ${selectedRooms.join(', ')}`, 20, 120);
 
         doc.setFont('helvetica', 'bold');
