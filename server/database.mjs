@@ -74,3 +74,13 @@ export const getCities = async () => {
     const [cities] =  await pool.query("SELECT city_id, city_name FROM city;");
     return cities;
 }
+
+export const getNumRooms = async (hotel_id) => {
+    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?", 
+        [hotel_id]
+    );
+    return numRoomsObject.num_rooms;
+}
+
+
+
