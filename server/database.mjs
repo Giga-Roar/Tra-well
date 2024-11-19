@@ -50,8 +50,13 @@ export const book = async (data) => {
     const bookingCount = (await pool.query("SELECT count(*) as count FROM booking;"))[0][0].count;
     const [returned] = await pool.query(`INSERT INTO booking VALUE
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-        `, [bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
-    console.log(returned);
+        `, [data.bookingID.slice(1) || bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
+        try{
+            console.log(data);
+        }
+        catch(e){
+            console.log("No such attribute");
+        }
 }
 
 
