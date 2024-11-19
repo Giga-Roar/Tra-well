@@ -105,14 +105,14 @@ export const getNumRooms = async (hotel_id) => {
 }
 
 export const login = async (username, password) => {
-    const [[db_login]] = await pool.query("SELECT host_username, host_password FROM host_credentials WHERE host_username = ?;",
+    const [[db_login]] = await pool.query("SELECT hotel_id, hotel_name, host_password FROM host_credentials NATURAL JOIN hotel WHERE host_username = ?;",
         [username]
     );
     if(db_login){
-        return [db_login.host_password === password, db_login.host_username];
+        return [db_login.host_password === password, db_login.hotel_id, db_login.hotel_name];
     }
     else{
-        return [false, ""];
+        return [false, 0, ""];
     }
 }
 
@@ -125,6 +125,17 @@ export const getCheckedRooms = async (hotel_id) => {
     return checkedRooms;
 }
 
+export const getFullRoomDetails = async (hotel_id) => {
+    const [objectList] = await pool.query(`SELECT room_no, booking_id, first_name, last_name, check_in_date, check_out_date, phone_number FROM (rooms NATURAL JOIN booking) WHERE hotel_id = ?`,
+        [hotel_id]
+    )
+    return objectList;
+}
 
-
-
+export const unBookRoom = async (hotel_id, rooms) => {
+    const roomNoList = rooms.map(room => room.room_no);
+    const listString = `${roomNoList}`
+    const paranthesisRoomNoList = "(" + listString + ")";
+    const [returned] = await pool.query(`DELETE FROM rooms WHERE (hotel_id = ${hotel_id}) AND (room_no IN ${paranthesisRoomNoList});`)
+    return returned;
+}
