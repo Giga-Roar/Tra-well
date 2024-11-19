@@ -59,12 +59,32 @@ INSERT INTO hotel VALUES
 (1, "Rohit's Vadapav Center", "Opposite to Wankhede stadium, south gate", 4, 30, 4),
 (2, "ITC Maratha", "Sahar Village, Andheri East, Mumbai, Maharashtra 400099", 5, 50, 4),
 (3, "Aquaman Resort", "Opposite to Pattanagere shed, Bengaluru", 5, 20, 1),
-(4, "Ocean Pearl", "Navabharath Cir, Kodailbail, Mangaluru, Karnataka 575003", 4, 40, 2);
+(4, "Ocean Pearl", "Navabharath Cir, Kodailbail, Mangaluru, Karnataka 575003", 4, 40, 2),
+(5, "Bengaluru Grand", "MG Road, Bengaluru, Karnataka", 4.5, 35, 1),
+(6, "Mangalore Beach Resort", "Panambur Beach, Mangaluru, Karnataka", 4, 40, 2),
+(17, "Shivamogga Safari Lodge", "Jog Falls Road, Shivamogga, Karnataka", 3.5, 25, 3),
+(18, "Mumbai Skyline Hotel", "Marine Drive, Mumbai, Maharashtra", 5, 50, 4),
+(19, "Pune Heritage Inn", "Shaniwar Wada, Pune, Maharashtra", 4, 30, 5),
+(20, "Nagpur Central Hotel", "Sitabuldi, Nagpur, Maharashtra", 3, 20, 6),
+(21, "Delhi Palace Hotel", "Connaught Place, New Delhi, Delhi NCR", 4.5, 45, 7),
+(22, "Ahmedabad Heritage", "Sabarmati Ashram Road, Ahmedabad, Gujarat", 4, 35, 8),
+(23, "Gandhinagar Lake View", "Sarkhej-Gandhinagar Highway, Gandhinagar, Gujarat", 3.5, 25, 9),
+(24, "Vadodara Royal Palace", "Laxmi Vilas Palace Road, Vadodara, Gujarat", 5, 50, 10),
+(25, "Dwarka Beach Resort", "Dwarka Beach, Dwarka, Gujarat", 4, 40, 11),
+(26, "Mysore Palace View", "Mysore Palace, Mysore, Karnataka", 4.5, 35, 12),
+(27, "Kolkata Heritage", "Park Street, Kolkata, West Bengal", 4, 30, 13),
+(28, "Darjeeling Himalayan View", "Mall Road, Darjeeling, West Bengal", 3.5, 25, 14),
+(29, "Bengaluru Tech Park Inn", "Whitefield, Bengaluru, Karnataka", 4, 40, 1),
+(30, "Mangalore Spice Hotel", "Kudla, Mangaluru, Karnataka", 3, 30, 2),
+(31, "Shivamogga Forest Lodge", "Bhadra Wildlife Sanctuary, Shivamogga, Karnataka", 4.5, 35, 3),
+(32, "Mumbai Gateway Hotel", "Colaba Causeway, Mumbai, Maharashtra", 5, 50, 4),
+(33, "Pune IT Park Hotel", "Hinjewadi, Pune, Maharashtra", 4, 40, 5),
+(34, "Nagpur Orange City Hotel", "Sadar, Nagpur, Maharashtra", 3.5, 35, 6);
 
 INSERT INTO host_credentials VALUES
-("RohitSharma45", "whatapav123", 1),
-("DarshanThoogudeepa6106", "Jalagara", 3),
-("SanjivP00ri", "NoAttacking", 2);
+("Rocky", "eldorado", 1),
+("Devaratha", "salaar", 3),
+("Shiva", "kantara", 2);
 
 INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
