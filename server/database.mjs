@@ -21,23 +21,23 @@ export const getNote = async (id) => {
 export const getHotels = async (city_name, min_ratings, max_ratings, city_id) => {
     min_ratings = min_ratings || 1;
     max_ratings = max_ratings || 5;
-    city_id = city_id || 0;
+    city_id  = city_id || 0;
     let hotels = "";
-    if (city_id != 0) {
+    if(city_id != 0){
         [hotels] = await pool.query(`
             SELECT hotel_id, hotel_name, rating from hotel where city_id=? AND rating > ? AND rating < ?;
-             `,
-            [city_id, min_ratings - 1, max_ratings + 1]
-        );
+             `, 
+             [city_id , min_ratings - 1, max_ratings + 1]
+         );
     }
-    else if (city_name) {
+    else if(city_name){
         [hotels] = await pool.query(`
            SELECT * from (hotel NATURAL JOIN city) where (city_name=? AND rating > ? AND rating < ?);
-            `,
-            [city_name, min_ratings - 1, max_ratings + 1]
+            `, 
+            [city_name , min_ratings - 1, max_ratings + 1]
         );
     }
-    else {
+    else{
         [hotels] = await pool.query(`
            SELECT * from (hotel NATURAL JOIN city) where rating > ? AND rating < ?; 
             `, [min_ratings - 1, max_ratings + 1]);
@@ -47,17 +47,40 @@ export const getHotels = async (city_name, min_ratings, max_ratings, city_id) =>
 
 //fix the hotel number issue and amount issue
 export const book = async (data) => {
+    const bookingID = data.bookingID.slice(1);
+    var room_query_values = "";
+    for(let i = 0; i < data.rooms.length; i++){
+        room_query_values += `(${data.hotel_id},${(data.rooms[i]).slice(5)},${bookingID}),`;
+    }
+    room_query_values = room_query_values.slice(0, room_query_values.length-1) + ';'
+
+
     const bookingCount = (await pool.query("SELECT count(*) as count FROM booking;"))[0][0].count;
     const [returned] = await pool.query(`INSERT INTO booking VALUE
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-        `, [data.bookingID.slice(1) || bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
-    try {
-        console.log(data);
-    }
-    catch (e) {
-        console.log("No such attribute");
-    }
+        `, [bookingID || bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
+        try{
+            console.log(data);
+        }
+        catch(e){
+            console.log("No such attribute");
+        }
+    const [rooms_message] = await pool.query(`INSERT INTO rooms VALUES ${room_query_values}`);
+    return [returned, rooms_message];
 }
+
+// console.log(await book({
+//     bookingID : "#123",
+//     firstName : "firstName",
+//     lastName : "lastName",
+//     phoneNumber: "0213",
+//     email : "email",
+//     checkInDate : "2024-11-20",
+//     checkOutDate : "2024-11-22",
+//     hotel_id : 1,
+//     booker_age : 19,
+//     rooms : ["Room 1", "Room 5", "Room10"]
+// }))
 
 
 export const devQuery = async (query) => {
@@ -76,26 +99,27 @@ export const getHotelsIdName = async (selected_city) => {
 }
 
 export const getCities = async () => {
-    const [cities] = await pool.query("SELECT city_id, city_name FROM city;");
+    const [cities] =  await pool.query("SELECT city_id, city_name FROM city;");
     return cities;
 }
 
 export const getNumRooms = async (hotel_id) => {
-    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?;",
+    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?;", 
         [hotel_id]
     );
     return numRoomsObject.num_rooms;
 }
 
 export const login = async (username, password) => {
-    const [[db_login]] = await pool.query("SELECT hotel_name, host_password FROM host_credentials natural join hotel WHERE host_username = ?;",
+    const [[db_login]] = await pool.query("SELECT host_username, host_password FROM host_credentials WHERE host_username = ?;",
         [username]
     );
-
-    if (db_login) {
-        return [db_login.host_password === password, db_login.hotel_name];
+    if(db_login){
+        return [db_login.host_password === password, db_login.host_username];
     }
-    else {
+    else{
         return [false, ""];
     }
 }
+
+
