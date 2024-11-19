@@ -1,8 +1,8 @@
-// AdminLogin.js
 import React, { useState } from 'react';
 import './AdminLogin.css';
 import { TextField, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from './config';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -16,14 +16,20 @@ const AdminLogin = () => {
         { username: 'admin3', password: 'password789', hotelName: 'Ocean View Resort' }
     ];
 
-    const handleLogin = () => {
-        // Find admin with matching credentials
-        const admin = admins.find(
-            (a) => a.username === username && a.password === password
-        );
+    const handleLogin = async () => {
 
-        if (admin) {
-            navigate('/admin-dashboard', { state: { hotelName: admin.hotelName } });
+        const url = `${BACKEND_URL}/login/${username}/${password}`;
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+      
+        const response = await fetch(url, options);
+        const responseObj = await response.json();
+        if (responseObj[0]) {
+            navigate('/admin-dashboard', { state: { hotelName: responseObj[1] } });
         } else {
             alert('Invalid username or password');
         }
