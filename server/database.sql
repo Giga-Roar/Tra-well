@@ -39,6 +39,15 @@ CREATE TABLE booking(
     FOREIGN KEY (hotel_id) references hotel(hotel_id)
 );
 
+CREATE TABLE rooms(
+    hotel_id int NOT NULL,
+    room_no int NOT NULL,
+    booking_id int NOT NULL,
+    PRIMARY KEY (hotel_id, room_no),
+    FOREIGN KEY (hotel_id) references hotel(hotel_id),
+    FOREIGN KEY (booking_id) references booking(booking_id)
+);
+
 INSERT INTO city VALUES 
 (1, "Bengaluru", "Karnataka"),
 (2, "Mangaluru", "Karnataka"),
@@ -84,7 +93,8 @@ INSERT INTO hotel VALUES
 INSERT INTO host_credentials VALUES
 ("Rocky", "eldorado", 1),
 ("Devaratha", "salaar", 3),
-("Shiva", "kantara", 2);
+("Shiva", "kantara", 2),
+("user", "pass");
 
 INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
@@ -97,6 +107,25 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE del_book(IN selected_booking_id INT)
+BEGIN
+    DELETE FROM rooms WHERE booking_id = selected_booking_id;
+    DELETE FROM booking WHERE booking_id = selected_booking_id;
+END
+$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE del_book_above(IN lower_limit INT)
+BEGIN
+    DELETE FROM rooms WHERE booking_id > lower_limit;
+    DELETE FROM booking WHERE booking_id > lower_limit;
+END
+$$
+DELIMITER ;
+
 
 
 DELIMITER $$
@@ -112,3 +141,6 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+
