@@ -1,5 +1,5 @@
 import express from 'express'
-import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities} from './database.mjs';
+import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, getNumRooms} from './database.mjs';
 import readline  from 'readline';
 import cors from "cors";
 
@@ -66,6 +66,12 @@ app.get("/hotelsInCity/:cityId", async (req, res) => {
 })
 
 
+
+app.get("/number-of-rooms/:hotel_id", async (req, res) => {
+    const hotelID = parseInt(req.params.hotel_id) || 1
+    const numRooms = await getNumRooms(hotelID); 
+    res.send(""+numRooms);
+});
 
 
 app.get("/hotels/:city", async (req, res) =>{
