@@ -9,6 +9,7 @@ import jsPDF from 'jspdf';
 import { BACKEND_URL } from './config';
 
 const BookingPage = () => {
+    var randomBID;
     const [isRendered, setRendered] = useState(false);
     const [bookingData, setBookingData] = useState(null);
 
@@ -88,9 +89,7 @@ const BookingPage = () => {
 
 
     const sendBookingData = async (bookingDataObject) => {
-        // console.log("Booked");
         try {
-            // console.log("DB: " + process.env.MYSQL_DATABASE);
           const url = `${BACKEND_URL}/booking-data`;
           const options = {
             method: 'POST',
@@ -183,9 +182,11 @@ const BookingPage = () => {
             // Convert milliseconds to years
             const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25; 
             const booker_age = differenceInMilliseconds / millisecondsInYear;
-
-
+            if(bookingId){
+                setBookingId(bookingId);
+            }
             setBookingData({
+                bookingID : (bookingId || randomBID),
                 firstName : firstName,
                 lastName : lastName,
                 phoneNumber: phoneNumber,
@@ -202,7 +203,7 @@ const BookingPage = () => {
     // eslint-disable-next-line
     useEffect(()=>{
         if(bookingId){
-
+            randomBID = bookingId;
         }
 
     }, [bookingId]);
