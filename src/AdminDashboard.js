@@ -61,7 +61,7 @@ const AdminDashboard = () => {
                 onClick={handleConfirmBooking}
                 fullWidth
             >
-                Confirm Selected Rooms
+                 Free Rooms
             </Button>
 
             <Button
