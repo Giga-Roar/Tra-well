@@ -1,5 +1,5 @@
 import express from 'express'
-import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, getNumRooms} from './database.mjs';
+import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, getNumRooms, login} from './database.mjs';
 import readline  from 'readline';
 import cors from "cors";
 
@@ -13,6 +13,12 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.post("/login/:user_name/:password", async (req, res) => {
+    const userName = req.params.user_name;
+    const password = req.params.password;
+    const loginDetails = await login(userName, password);
+    res.send(loginDetails);
+})
 
 app.post("/booking-data", async (req, res) => {
     try{
