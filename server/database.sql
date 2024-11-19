@@ -32,7 +32,7 @@ CREATE TABLE booking(
     hotel_id int NOT NULL,
     booking_date date,
     check_in_date date,
-    check_out_data date,
+    check_out_date date,
     total_amount int NOT NULL,
     phone_number varchar(14) NOT NULL,
     booker_age int NOT NULL,
@@ -94,7 +94,8 @@ INSERT INTO host_credentials VALUES
 ("Rocky", "eldorado", 1),
 ("Devaratha", "salaar", 3),
 ("Shiva", "kantara", 2),
-("user", "pass", 4);
+("user", "pass", 4),
+("host", "pass123", 5);
 
 INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
