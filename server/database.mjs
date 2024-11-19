@@ -21,23 +21,23 @@ export const getNote = async (id) => {
 export const getHotels = async (city_name, min_ratings, max_ratings, city_id) => {
     min_ratings = min_ratings || 1;
     max_ratings = max_ratings || 5;
-    city_id  = city_id || 0;
+    city_id = city_id || 0;
     let hotels = "";
-    if(city_id != 0){
+    if (city_id != 0) {
         [hotels] = await pool.query(`
             SELECT hotel_id, hotel_name, rating from hotel where city_id=? AND rating > ? AND rating < ?;
-             `, 
-             [city_id , min_ratings - 1, max_ratings + 1]
-         );
-    }
-    else if(city_name){
-        [hotels] = await pool.query(`
-           SELECT * from (hotel NATURAL JOIN city) where (city_name=? AND rating > ? AND rating < ?);
-            `, 
-            [city_name , min_ratings - 1, max_ratings + 1]
+             `,
+            [city_id, min_ratings - 1, max_ratings + 1]
         );
     }
-    else{
+    else if (city_name) {
+        [hotels] = await pool.query(`
+           SELECT * from (hotel NATURAL JOIN city) where (city_name=? AND rating > ? AND rating < ?);
+            `,
+            [city_name, min_ratings - 1, max_ratings + 1]
+        );
+    }
+    else {
         [hotels] = await pool.query(`
            SELECT * from (hotel NATURAL JOIN city) where rating > ? AND rating < ?; 
             `, [min_ratings - 1, max_ratings + 1]);
@@ -51,12 +51,12 @@ export const book = async (data) => {
     const [returned] = await pool.query(`INSERT INTO booking VALUE
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         `, [data.bookingID.slice(1) || bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
-        try{
-            console.log(data);
-        }
-        catch(e){
-            console.log("No such attribute");
-        }
+    try {
+        console.log(data);
+    }
+    catch (e) {
+        console.log("No such attribute");
+    }
 }
 
 
@@ -76,27 +76,26 @@ export const getHotelsIdName = async (selected_city) => {
 }
 
 export const getCities = async () => {
-    const [cities] =  await pool.query("SELECT city_id, city_name FROM city;");
+    const [cities] = await pool.query("SELECT city_id, city_name FROM city;");
     return cities;
 }
 
 export const getNumRooms = async (hotel_id) => {
-    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?;", 
+    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?;",
         [hotel_id]
     );
     return numRoomsObject.num_rooms;
 }
 
 export const login = async (username, password) => {
-    const [[db_login]] = await pool.query("SELECT host_username, host_password FROM host_credentials WHERE host_username = ?;",
+    const [[db_login]] = await pool.query("SELECT hotel_name, host_password FROM host_credentials natural join hotel WHERE host_username = ?;",
         [username]
     );
-    if(db_login){
-        return [db_login.host_password === password, db_login.host_username];
+
+    if (db_login) {
+        return [db_login.host_password === password, db_login.hotel_name];
     }
-    else{
+    else {
         return [false, ""];
     }
 }
-
-
