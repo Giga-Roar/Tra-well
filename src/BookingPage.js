@@ -37,6 +37,7 @@ const BookingPage = () => {
     const [usedBookingIds, setUsedBookingIds] = useState(new Set());
 
 
+
     // useEffect(() => {
     //     // Triggering the preflight OPTIONS request manually
         const triggerPreflight = async () => {
@@ -45,7 +46,6 @@ const BookingPage = () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        // Add any other custom headers here if necessary
                     },
                 });
                 if (response.ok) {
@@ -107,14 +107,12 @@ const BookingPage = () => {
           }
 
           const responseText = await response.text()
-          
+        //   eslint-disable-next-line
           if (responseText.trim() == "Age must be above 18"){
             alert('Age of the customer must be 18 or above to book a room');
             setBookingConfirmed(false);
           }
-          
-        //   const data = await response.json();
-        //   console.log(`sent ${data}`);
+
         } catch (error) {
           console.error('Error:', error);
         }
@@ -128,10 +126,19 @@ const BookingPage = () => {
     };
 
     const handleHotelChange = async (e) => {
-        const currHotel = e.target.value;
-        setSelectedHotel(await JSON.parse(currHotel));
-        // console.log(currHotel);
-        setRooms(['Room 1', 'Room 2', 'Room 3']);
+        const currHotel = JSON.parse(e.target.value);
+        setSelectedHotel(currHotel);
+
+        const response = await fetch(`${BACKEND_URL}/number-of-rooms/${currHotel.hotel_id}`);
+
+        const numRooms= await response.json();
+
+        let rooms_list = [];
+        for(let i=0; i<numRooms; i++){
+            rooms_list[i] = `Room ${i+1}`
+        }
+
+        setRooms(rooms_list);
     };
 
     const handleRoomSelect = (room) => {
@@ -197,12 +204,11 @@ const BookingPage = () => {
         if(bookingId){
 
         }
-            // console.log("bk_id:" + bookingId);
+
     }, [bookingId]);
 
     useEffect(()=>{
         if(bookingData){
-            // console.log("bk_data:" + bookingData);
             sendBookingData(bookingData);
         }
                 
@@ -502,6 +508,7 @@ const BookingPage = () => {
                                 type="checkbox"
                                 id={room}
                                 checked={selectedRooms.includes(room)}
+                                // checked = {`Room ${index+1}`}
                                 onChange={() => handleRoomSelect(room)}
                             />
                             <label htmlFor={room}>{room}</label>
