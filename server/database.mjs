@@ -59,14 +59,8 @@ export const book = async (data) => {
     const [returned] = await pool.query(`INSERT INTO booking VALUE
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         `, [bookingID || bookingCount + 1, data.firstName, data.lastName, data.email, data.hotel_id, (new Date()).toISOString().slice(0, 10), data.checkInDate, data.checkOutDate, 500, data.phoneNumber, data.booker_age]);
-        try{
-            console.log(data);
-        }
-        catch(e){
-            console.log("No such attribute");
-        }
+
     const [rooms_message] = await pool.query(`INSERT INTO rooms VALUES ${room_query_values}`);
-    return [returned, rooms_message];
 }
 
 // console.log(await book({
@@ -121,5 +115,16 @@ export const login = async (username, password) => {
         return [false, ""];
     }
 }
+
+export const getCheckedRooms = async (hotel_id) => {
+    const [checkedRoomsObjectList] = await pool.query(`SELECT room_no FROM rooms WHERE hotel_id = ?;`,
+        [hotel_id]
+    );
+
+    const checkedRooms = checkedRoomsObjectList.map(item => item.room_no);
+    return checkedRooms;
+}
+
+
 
 
