@@ -185,6 +185,9 @@ const BookingPage = () => {
             if(bookingId){
                 setBookingId(bookingId);
             }
+
+            const checkedRooms = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+            .map((checkbox) => checkbox.id);
             setBookingData({
                 bookingID : (bookingId || randomBID),
                 firstName : firstName,
@@ -194,7 +197,8 @@ const BookingPage = () => {
                 checkInDate : checkInDate,
                 checkOutDate : checkOutDate,
                 hotel_id : h_id,
-                booker_age : booker_age
+                booker_age : booker_age,
+                rooms : checkedRooms
             })
             // console.log("ok here: " + JSON.stringify(bookingData));
         } // eslint-disable-next-line
@@ -229,6 +233,7 @@ const BookingPage = () => {
         } else if (selectedRooms.length > peopleCount) {
             setSelectedRooms((prevRooms) => prevRooms.slice(0, peopleCount));
         }
+
     };
 
     const generateBookingId = () => {
