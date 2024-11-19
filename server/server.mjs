@@ -1,5 +1,5 @@
 import express from 'express'
-import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, getNumRooms, login, getCheckedRooms} from './database.mjs';
+import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, getNumRooms, login, getCheckedRooms, getFullRoomDetails, unBookRoom} from './database.mjs';
 import readline  from 'readline';
 import cors from "cors";
 
@@ -25,6 +25,13 @@ app.get("/checked-rooms/:hotel_id", async (req, res) => {
     const checkedRooms = await getCheckedRooms(hotel_id);
     res.send(checkedRooms);
 })
+
+app.get("/full-room-details/:hotel_id", async(req, res) => {
+    const hotel_id = req.params.hotel_id;
+    const roomDetails = await getFullRoomDetails(hotel_id);
+    res.send(roomDetails);
+})
+
 app.post("/booking-data", async (req, res) => {
     try{
         const data = req.body;
@@ -35,6 +42,18 @@ app.post("/booking-data", async (req, res) => {
         res.send("Age must be above 18");
     }
 })
+
+app.post('/unbook-rooms/:hotel_id', async (req, res) =>{
+    const hotel_id = req.params.hotel_id;
+    try{
+        const data = req.body;
+        const unBookResult = await unBookRoom(hotel_id, data);
+        res.send(unBookResult);
+    }
+    catch (e) {
+        console.error(e);
+    }
+});
 
 app.get("/booked", async (req, res) => {
     const totalBookings = await getAllBookings();
