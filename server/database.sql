@@ -94,7 +94,7 @@ INSERT INTO host_credentials VALUES
 ("Rocky", "eldorado", 1),
 ("Devaratha", "salaar", 3),
 ("Shiva", "kantara", 2),
-("user", "pass");
+("user", "pass", 4);
 
 INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
