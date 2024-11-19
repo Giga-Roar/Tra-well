@@ -112,5 +112,3 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-
