@@ -129,11 +129,15 @@ const BookingPage = () => {
         setSelectedHotel(currHotel);
 
         const response = await fetch(`${BACKEND_URL}/number-of-rooms/${currHotel.hotel_id}`);
-
         const numRooms= await response.json();
 
+        const checkedRoomsResponse = await fetch(`${BACKEND_URL}/checked-rooms/${currHotel.hotel_id}`);
+        const checkedRooms = await checkedRoomsResponse.json();
         let rooms_list = [];
         for(let i=0; i<numRooms; i++){
+            if(checkedRooms.includes(i+1)){
+                continue;
+            }
             rooms_list[i] = `Room ${i+1}`
         }
 
