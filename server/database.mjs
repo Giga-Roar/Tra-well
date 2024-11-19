@@ -81,11 +81,22 @@ export const getCities = async () => {
 }
 
 export const getNumRooms = async (hotel_id) => {
-    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?", 
+    const [[numRoomsObject]] = await pool.query("SELECT num_rooms FROM hotel where hotel_id = ?;", 
         [hotel_id]
     );
     return numRoomsObject.num_rooms;
 }
 
+export const login = async (username, password) => {
+    const [[db_login]] = await pool.query("SELECT host_username, host_password FROM host_credentials WHERE host_username = ?;",
+        [username]
+    );
+    if(db_login){
+        return [db_login.host_password === password, db_login.host_username];
+    }
+    else{
+        return [false, ""];
+    }
+}
 
 
