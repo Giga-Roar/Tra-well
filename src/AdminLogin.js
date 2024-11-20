@@ -9,15 +9,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    // Define admins with their hotel names
-    const admins = [
-        { username: 'admin1', password: 'password123', hotelName: 'Hotel Sunshine' },
-        { username: 'admin2', password: 'password456', hotelName: 'Grand Palace' },
-        { username: 'admin3', password: 'password789', hotelName: 'Ocean View Resort' }
-    ];
-
-    const handleLogin = async () => {
-
+    const handleLogin = async () => {  
         const url = `${BACKEND_URL}/login/${username}/${password}`;
           const options = {
             method: 'POST',
@@ -29,7 +21,7 @@ const AdminLogin = () => {
         const response = await fetch(url, options);
         const responseObj = await response.json();
         if (responseObj[0]) {
-            navigate('/admin-dashboard', { state: { hotelName: responseObj[1] } });
+            navigate('/admin-dashboard', { state: { hotel_id : responseObj[1], hotelName: responseObj[2] } });
         } else {
             alert('Invalid username or password');
         }
