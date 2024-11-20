@@ -71,31 +71,50 @@ INSERT INTO hotel VALUES
 (4, "Ocean Pearl", "Navabharath Cir, Kodailbail, Mangaluru, Karnataka 575003", 4, 40, 2),
 (5, "Bengaluru Grand", "MG Road, Bengaluru, Karnataka", 4.5, 35, 1),
 (6, "Mangalore Beach Resort", "Panambur Beach, Mangaluru, Karnataka", 4, 40, 2),
-(17, "Shivamogga Safari Lodge", "Jog Falls Road, Shivamogga, Karnataka", 3.5, 25, 3),
-(18, "Mumbai Skyline Hotel", "Marine Drive, Mumbai, Maharashtra", 5, 50, 4),
-(19, "Pune Heritage Inn", "Shaniwar Wada, Pune, Maharashtra", 4, 30, 5),
-(20, "Nagpur Central Hotel", "Sitabuldi, Nagpur, Maharashtra", 3, 20, 6),
-(21, "Delhi Palace Hotel", "Connaught Place, New Delhi, Delhi NCR", 4.5, 45, 7),
-(22, "Ahmedabad Heritage", "Sabarmati Ashram Road, Ahmedabad, Gujarat", 4, 35, 8),
-(23, "Gandhinagar Lake View", "Sarkhej-Gandhinagar Highway, Gandhinagar, Gujarat", 3.5, 25, 9),
-(24, "Vadodara Royal Palace", "Laxmi Vilas Palace Road, Vadodara, Gujarat", 5, 50, 10),
-(25, "Dwarka Beach Resort", "Dwarka Beach, Dwarka, Gujarat", 4, 40, 11),
-(26, "Mysore Palace View", "Mysore Palace, Mysore, Karnataka", 4.5, 35, 12),
-(27, "Kolkata Heritage", "Park Street, Kolkata, West Bengal", 4, 30, 13),
-(28, "Darjeeling Himalayan View", "Mall Road, Darjeeling, West Bengal", 3.5, 25, 14),
-(29, "Bengaluru Tech Park Inn", "Whitefield, Bengaluru, Karnataka", 4, 40, 1),
-(30, "Mangalore Spice Hotel", "Kudla, Mangaluru, Karnataka", 3, 30, 2),
-(31, "Shivamogga Forest Lodge", "Bhadra Wildlife Sanctuary, Shivamogga, Karnataka", 4.5, 35, 3),
-(32, "Mumbai Gateway Hotel", "Colaba Causeway, Mumbai, Maharashtra", 5, 50, 4),
-(33, "Pune IT Park Hotel", "Hinjewadi, Pune, Maharashtra", 4, 40, 5),
-(34, "Nagpur Orange City Hotel", "Sadar, Nagpur, Maharashtra", 3.5, 35, 6);
+(7, "Shivamogga Safari Lodge", "Jog Falls Road, Shivamogga, Karnataka", 3.5, 25, 3),
+(8, "Mumbai Skyline Hotel", "Marine Drive, Mumbai, Maharashtra", 5, 50, 4),
+(9, "Pune Heritage Inn", "Shaniwar Wada, Pune, Maharashtra", 4, 30, 5),
+(10, "Nagpur Central Hotel", "Sitabuldi, Nagpur, Maharashtra", 3, 20, 6),
+(11, "Delhi Palace Hotel", "Connaught Place, New Delhi, Delhi NCR", 4.5, 45, 7),
+(12, "Ahmedabad Heritage", "Sabarmati Ashram Road, Ahmedabad, Gujarat", 4, 35, 8),
+(13, "Gandhinagar Lake View", "Sarkhej-Gandhinagar Highway, Gandhinagar, Gujarat", 3.5, 25, 9),
+(14, "Vadodara Royal Palace", "Laxmi Vilas Palace Road, Vadodara, Gujarat", 5, 50, 10),
+(15, "Dwarka Beach Resort", "Dwarka Beach, Dwarka, Gujarat", 4, 40, 11),
+(16, "Mysore Palace View", "Mysore Palace, Mysore, Karnataka", 4.5, 35, 12),
+(17, "Kolkata Heritage", "Park Street, Kolkata, West Bengal", 4, 30, 13),
+(18, "Darjeeling Himalayan View", "Mall Road, Darjeeling, West Bengal", 3.5, 25, 14),
+(19, "Bengaluru Tech Park Inn", "Whitefield, Bengaluru, Karnataka", 4, 40, 1),
+(20, "Mangalore Spice Hotel", "Kudla, Mangaluru, Karnataka", 3, 30, 2),
+(21, "Shivamogga Forest Lodge", "Bhadra Wildlife Sanctuary, Shivamogga, Karnataka", 4.5, 35, 3),
+(22, "Mumbai Gateway Hotel", "Colaba Causeway, Mumbai, Maharashtra", 5, 50, 4),
+(23, "Pune IT Park Hotel", "Hinjewadi, Pune, Maharashtra", 4, 40, 5),
+(24, "Nagpur Orange City Hotel", "Sadar, Nagpur, Maharashtra", 3.5, 35, 6);
 
 INSERT INTO host_credentials VALUES
-("Rocky", "eldorado", 1),
-("Devaratha", "salaar", 3),
-("Shiva", "kantara", 2),
-("user", "pass", 4),
-("host", "pass123", 5);
+("host1", "pass123", 1),
+("host2", "pass123", 3),
+("host3", "pass123", 2),
+("host4", "pass123", 4),
+("host5", "pass123", 5),
+("host6", "pass123", 6),
+("host7", "pass123", 7),
+("host8", "pass123", 8),
+("host9", "pass123", 9),
+("host10", "pass123", 10),
+("host11", "pass123", 11),
+("host12", "pass123",12),
+("host13", "pass123",13),
+("host14", "pass123",14),
+("host15", "pass123",15),
+("host16", "pass123",16),
+("host17", "pass123",17),
+("host18", "pass123",18),
+("host19", "pass123",19),
+("host20", "pass123",20),
+("host21", "pass123",21),
+("host22", "pass123",22),
+("host23", "pass123",23),
+("host24", "pass123",24);
 
 INSERT INTO booking VALUES
 (1, 'John', 'Doe', 'johndoe123@yahoo.com', 1, '2024-11-01', '2024-11-10', '2024-11-15', 5000, "+919876543210", 21),
@@ -142,6 +161,3 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-
-
