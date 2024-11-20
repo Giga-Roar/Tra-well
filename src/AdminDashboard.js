@@ -114,7 +114,7 @@ const AdminDashboard = () => {
                             {room.check_in_date}
                         </td>
                         <td>
-                            {room.check_out_data}
+                            {room.check_out_date}
                         </td>
                     </tr>
                 ))}
