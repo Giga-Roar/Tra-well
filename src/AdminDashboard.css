@@ -26,43 +26,65 @@
     align-items: center;
 }
 
-/* Hover Effect */
-.admin-dashboard-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
-}
-
 /* Typography for Header */
 .admin-dashboard-title {
     color: #2cb977;
     font-weight: 600;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 26px;
 }
 
 /* Room Selection Styling */
-.room-selection {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.room-selection table {
     width: 100%;
-    margin-bottom: 20px;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.room-label {
+/* Header row styling */
+.room-selection th {
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #555;
+    border-bottom: 2px solid #ccc;
+}
+
+/* Row styling */
+.room-row {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.room-row td {
+    padding: 12px;
+    font-size: 14px;
     color: #333;
-    font-size: 16px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
 }
 
+/* Spacing between rows */
+.room-selection tbody tr+tr {
+    margin-top: 10px;
+}
+
+/* Checkbox styling */
 .room-checkbox {
+    margin-right: 8px;
     color: #2cb977;
 }
 
 .room-checkbox.Mui-checked {
     color: #d72324;
+}
+
+/* Hover effect on rows */
+.room-row:hover {
+    background-color: #f9f9f9;
+    border-color: #d72324;
 }
 
 /* Button Styling */
@@ -73,18 +95,19 @@
     font-weight: bold;
     letter-spacing: 0.5px;
     margin-top: 20px;
-    background-color: #d72324;
+    background-color: #d01f1f;
     color: white;
     width: 100%;
 }
 
 .admin-dashboard-button:hover {
-    background-color: #b81d20;
+    transition: all 0.2s ease-in;
+    background-color: #d72324;
 }
 
 /* Logout Button Styling */
 .admin-dashboard-logout {
-    color: #d72324;
+    color: #fefefe;
     border: 1px solid #d72324;
     border-radius: 8px;
     padding: 10px 16px;
@@ -92,11 +115,11 @@
     font-weight: bold;
     letter-spacing: 0.5px;
     margin-top: 10px;
-    width: 100%;
+    width: 30%;
 }
 
 .admin-dashboard-logout:hover {
-    background-color: #fbecec;
+    background-color: #cd0000;
 }
 
 /* Input Field Styling */
