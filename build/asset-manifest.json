@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8fe885cb.css",
+    "main.js": "/static/js/main.9cb1806c.js",
+    "static/js/239.6d4cb9d1.chunk.js": "/static/js/239.6d4cb9d1.chunk.js",
+    "static/js/213.b79d982b.chunk.js": "/static/js/213.b79d982b.chunk.js",
+    "static/js/732.69000a49.chunk.js": "/static/js/732.69000a49.chunk.js",
+    "static/media/fire.png": "/static/media/fire.cf8c79c358d687d6f860.png",
+    "static/media/bg.png": "/static/media/bg.dce925d75675ec0bcfda.png",
+    "static/media/Adventure.otf": "/static/media/Adventure.9677cd8d8e48154cdfab.otf",
+    "static/media/GothamKnights-nRoEP.otf": "/static/media/GothamKnights-nRoEP.ab6af9b7da386e81ce0f.otf",
+    "index.html": "/index.html",
+    "main.8fe885cb.css.map": "/static/css/main.8fe885cb.css.map",
+    "main.9cb1806c.js.map": "/static/js/main.9cb1806c.js.map",
+    "239.6d4cb9d1.chunk.js.map": "/static/js/239.6d4cb9d1.chunk.js.map",
+    "213.b79d982b.chunk.js.map": "/static/js/213.b79d982b.chunk.js.map",
+    "732.69000a49.chunk.js.map": "/static/js/732.69000a49.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8fe885cb.css",
+    "static/js/main.9cb1806c.js"
+  ]
+}
