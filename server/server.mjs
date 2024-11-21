@@ -3,7 +3,7 @@ import {getHotels, devQuery, book, getAllBookings, getHotelsIdName, getCities, g
 import readline  from 'readline';
 import cors from "cors";
 
-
+const backendPort = PROCESS.env.BACKEND_PORT;
 const app = express();
 app.use(express.json());
 
@@ -143,6 +143,6 @@ app.use((err, req, res, next) =>{
 }
 );
 
-app.listen(5000, ()=>{
-    console.log('Server is running on port 5000');
+app.listen(backendPort, ()=>{
+    console.log(`Server is running on port ${backendPort}` );
 })
